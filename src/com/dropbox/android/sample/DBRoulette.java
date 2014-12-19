@@ -96,7 +96,7 @@ public class DBRoulette extends Activity {
 	private Button folder;
 	private ImageView mImage;
 
-	private final String PHOTO_DIR = "/Apps/VS/vid/";
+	private final String PHOTO_DIR = "/Apps/Vehicle State/vid/";
 
 	final static private int NEW_PICTURE = 1;
 	final static private int NEW_FILE = 2;
@@ -213,17 +213,7 @@ public class DBRoulette extends Activity {
 		});
 
 
-		// This is the button to take a photo
-		mRoulette = (Button)findViewById(R.id.roulette_button);
-
-		mRoulette.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				DownloadRandomPicture download = new DownloadRandomPicture(DBRoulette.this, mApi, PHOTO_DIR, mImage);
-				download.execute();
-			}
-		});
-
-		// Display the proper UI state if logged in or not
+				// Display the proper UI state if logged in or not
 		setLoggedIn(mApi.getSession().isLinked());
 
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-2.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.1.xsd">
+
+	<!-- User/Movie Ratings -->
+	<bean id="ratingDao"
+		class="edu.ucdavis.cs.movieminer.data.RatingDaoImpl" />	
+	
+	<bean id="ratingDataLoader"
+		class="edu.ucdavis.cs.movieminer.data.CsvDataLoader">
+		<property name="inputSourceItemProvider"
+			ref="ratingInputSourceItemProviderBean" />
+		<property name="itemProcessor" ref="ratingItemProcessorBean" />
+		<property name="batchSize" value="1000" />
+	</bean>
+
+	<bean id="ratingInputSourceItemProviderBean"
+		class="edu.ucdavis.cs.movieminer.data.CsvInputSourceItemProvider">  
+		<property name="inputSource" 
+			value="file:/home/fisherog/dev/netflix_data/train.csv.gz" />
+	</bean>
+
+	<bean id="ratingItemProcessorBean"
+		class="edu.ucdavis.cs.movieminer.data.RatingItemProcessor">
+		<property name="dao" ref="ratingDao" />	
+	</bean>
+	
+	<!-- Movie Titles  -->
+	<bean id="movieTitleDao"
+		class="edu.ucdavis.cs.movieminer.data.MovieTitleDaoImpl" />	
+	
+	<bean id="movieTitleDataLoader"
+		class="edu.ucdavis.cs.movieminer.data.CsvDataLoader">
+		<property name="inputSourceItemProvider"
+			ref="movieTitleInputSourceItemProviderBean" />
+		<property name="itemProcessor" ref="movieTitleItemProcessorBean" />
+		<property name="batchSize" value="1000" />
+	</bean>
+
+	<bean id="movieTitleInputSourceItemProviderBean"
+		class="edu.ucdavis.cs.movieminer.data.CsvInputSourceItemProvider">  
+		<property name="inputSource" 
+			value="file:/home/fisherog/dev/netflix_data/movie_titles.txt" />
+	</bean>
+
+	<bean id="movieTitleItemProcessorBean"
+		class="edu.ucdavis.cs.movieminer.data.MovieTitleItemProcessor">
+		<property name="dao" ref="movieTitleDao" />	
+	</bean>
+
+</beans>
